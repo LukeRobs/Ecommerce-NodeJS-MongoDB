@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-const { Schema} = mongoose;
+const { Schema } = mongoose;
 
 const User = new Schema({
     name: {
@@ -12,7 +12,8 @@ const User = new Schema({
     },
     cpf: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     email: {
         type: String,
