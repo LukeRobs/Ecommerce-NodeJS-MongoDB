@@ -2,19 +2,26 @@ import { Produto } from '../models/produto.js'
 import { Categoria } from '../models/categoria.js'
 import mongoose from 'mongoose'
 
+
 export const criarProduto = async (req, res) => {
     try {
-        const {nome, descricao, preco, estoque, imagens, categoria, isActive} = req.body
+        const {nome, descricao, preco, estoque, categoria, isActive} = req.body
 
         const produtoCadastrado = await Produto.findOne({nome})
 
         if(produtoCadastrado) {
             return res.status(400).json({Message: "Produto ja cadastrado"});
         }
-        const categoriaExiste = await Categoria.findOne({nome: categoria});
+        const categoriaName = categoria.trim();
+        const categoriaExiste = await Categoria.findOne({nome: {$regex: new RegExp(`^${categoriaName}$`, 'i')}});
+        console.log('categoria recebida:', categoriaName);
+        console.log('req.body completo:', req.body);
             if(!categoriaExiste) {
                 return res.status(400).json({message: "categoria não encontrada"});
             }
+            
+        
+        const imagens = req.files.map(file => file.path);
 
         const novoProduto = new Produto({
             nome,
@@ -23,9 +30,8 @@ export const criarProduto = async (req, res) => {
             estoque,
             imagens,
             categoria: categoriaExiste._id,
-            isActive,
+            isActive
         });
-
         await novoProduto.save();
 
         res.status(201).json({
@@ -37,6 +43,7 @@ export const criarProduto = async (req, res) => {
                 preco: novoProduto.preco,
                 estoque: novoProduto.estoque,
                 categoria: novoProduto.categoria,
+                imagens: novoProduto.imagens,
                 ativo: novoProduto.isActive
             }
         });
