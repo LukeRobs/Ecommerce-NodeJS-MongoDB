@@ -9,10 +9,7 @@ export const criarCategoria = async (req, res) => {
             return res.status(400).json({Message: "Categoria ja cadastrada!"});
         }
 
-        const novaCategoria = new Categoria({
-            nome,
-            descricao
-        });
+        const novaCategoria = new Categoria(req.body);
         await novaCategoria.save();
         res.status(201).json({
             Message: "Categoria Cadastrada com sucesso",

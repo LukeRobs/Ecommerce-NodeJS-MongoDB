@@ -1,42 +1,29 @@
 import { Produto } from '../models/produto.js'
-import { Categoria} from '../models/categoria.js'
+import { Categoria } from '../models/categoria.js'
 import mongoose from 'mongoose'
 
 export const criarProduto = async (req, res) => {
     try {
-        const {nome, descricao, preco, estoque, imagens, categoria: categoriaInput, isActive} = req.body
+        const {nome, descricao, preco, estoque, imagens, categoria, isActive} = req.body
+
         const produtoCadastrado = await Produto.findOne({nome})
 
         if(produtoCadastrado) {
             return res.status(400).json({Message: "Produto ja cadastrado"});
         }
-        if (!categoriaInput) {
-            return res.status(400).json({ message: "Categoria é obrigatória" });
-        }
-        let categoriaId;
+        const categoriaExiste = await Categoria.findOne({nome: categoria});
+            if(!categoriaExiste) {
+                return res.status(400).json({message: "categoria não encontrada"});
+            }
 
-        if(mongoose.Types.ObjectId.isValid(categoriaInput)) {
-            const categoria = await Categoria.findById(categoriaInput);
-            if(!categoria) {
-                return res.status(404).json({ message: "Categoria não encontrada pelo ID" });
-            }
-            categoriaId = categoria._id;
-        }
-        else {
-            const categoria = await Categoria.findOne({nome: categoriaInput});
-            if(!categoria) {
-                return res.status(404).json({ message: "Categoria não encontrada pelo nome" });
-            }
-            categoriaId = categoria._id;
-        }
         const novoProduto = new Produto({
             nome,
             descricao,
             preco,
             estoque,
             imagens,
+            categoria: categoriaExiste._id,
             isActive,
-            categoria: categoriaId
         });
 
         await novoProduto.save();
@@ -44,6 +31,7 @@ export const criarProduto = async (req, res) => {
         res.status(201).json({
             Message: "Produto Cadastrado com sucesso",
             produto: {
+                id: novoProduto._id,
                 nome: novoProduto.nome,
                 descricao: novoProduto.descricao,
                 preco: novoProduto.preco,

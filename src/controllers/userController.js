@@ -30,7 +30,7 @@ export const createUser = async (req, res) => {
         surname, 
         cpf, 
         email, 
-        password: passwordHash
+        password: passwordHash,
     });
     await newUser.save();
     res.status(201).json({
@@ -42,7 +42,6 @@ export const createUser = async (req, res) => {
         surname: newUser.surname,
         cpf: newUser.cpf,
         email: newUser.email,
-        password: newUser.password
         }
     });
     }
