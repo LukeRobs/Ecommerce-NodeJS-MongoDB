@@ -12,17 +12,14 @@ O projeto implementa autenticação de usuários com JSON Web Tokens (JWT), incl
 ✅ Cadastro de usuários  
 ✅ Login com geração de token JWT  
 ✅ Validação de autenticação em rotas protegidas  
-✅ Estrutura inicial organizada em controllers e routes
-**Sistema de Gerenciamento de Produtos**
-✅ CRUD completo para produtos (criar, listar, atualizar, deletar)
-✅ Modelo de produto com campos: nome, descrição, preço, quantidade em estoque, categoria
-- **Sistema de Gerenciamento de Categorias**
-✅ CRUD completo para categorias (criar, listar, atualizar, deletar)
-✅ Modelo de categoria com nome e descrição
-- **Sistema de Validação com Joi**
-✅ Validações automáticas para dados de entrada
-✅ Middleware de validação para todas as rotas
-✅ Schemas de validação para usuários, produtos e categorias
+✅ Estrutura inicial organizada em controllers e routes  
+✅ CRUD completo para produtos (criar, listar, atualizar, deletar)  
+✅ Modelo de produto com campos: nome, descrição, preço, quantidade em estoque, categoria  
+✅ CRUD completo para categorias (criar, listar, atualizar, deletar)  
+✅ Modelo de categoria com nome e descrição  
+✅ Validações automáticas para dados de entrada  
+✅ Middleware de validação para todas as rotas  
+✅ Schemas de validação para usuários, produtos e categorias  
 
 ---
 
