@@ -8,10 +8,10 @@ export const criarProduto = async (req, res) => {
         const {nome, descricao, preco, estoque, categoria, isActive} = req.body
 
         const produtoCadastrado = await Produto.findOne({nome})
-
         if(produtoCadastrado) {
             return res.status(400).json({Message: "Produto ja cadastrado"});
         }
+        
         const categoriaName = categoria.trim();
         const categoriaExiste = await Categoria.findOne({nome: {$regex: new RegExp(`^${categoriaName}$`, 'i')}});
         console.log('categoria recebida:', categoriaName);
