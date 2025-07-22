@@ -7,26 +7,7 @@ import { pagination } from "../middlewares/pagination.middleware.js";
 
 const router = express.Router();
 
-router.post('/cadastro', validate(createUserSchema), async (req, res) => {
-    try {
-        const user = createUser(req.body);
-        await user.save();
-        res.status(201).json({
-        message: "Usuário cadastrado com sucesso",
-        token: generateToken(newUser._id),
-        user: {
-            id: user._id,
-            name: user.name,
-            surname: user.surname,
-            cpf: user.cpf,
-            email: user.email,
-        }
-    });
-    }
-    catch(err) {
-
-    }
-});
+router.post('/cadastro', validate(createUserSchema), createUser);
 router.post('/login', loginUser);
 
 

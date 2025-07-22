@@ -36,6 +36,16 @@ const produtos = new Schema({
     isActive: {
         type: Boolean,
         default: true
+    },
+    mediaAvaliacoes: {
+        type: Number,
+        default: 0,
+        required: true
+    },
+    numeroAvaliacoes: {
+        type: Number,
+        default: 0,
+        required: true  
     }
     },  
     {

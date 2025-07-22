@@ -19,6 +19,7 @@ export const createUser = async (req, res) => {
         }
 
         if (!verificarCpf(cpf)) {
+            console.log(typeof cpf, cpf);
             return res.status(400).json({ message: "CPF inválido." });
         }
    

@@ -12,6 +12,7 @@ export const verificarToken = (token) => {
 	}
 
 export const verificarCpf = (cpf) => {
+	if (typeof cpf !== 'string') cpf = String(cpf);
 	cpf = cpf.replace(/[^\d]+/g, '');
 
 	if(cpf.length != 11) {
