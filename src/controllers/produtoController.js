@@ -56,19 +56,64 @@ export const criarProduto = async (req, res) => {
 export const listarProdutos = async (req, res) => {
     
     try {
-        const page = parseInt(req.query.page) || 1
-        const limit = parseInt(req.query.limit) || 10
-        const skip = (page - 1) * limit;
+        const { search, category, minPrice, maxPrice, inStock} = req.query;
 
-        const Produtos = await Produto.find({})
+        const query = {};
+
+        if(search) {
+            query.$or = [
+                { nome: {$regex: search, $options: 'i'}},
+                { descricao: {$regex: search, $options: 'i'}}
+            ];
+        }
+
+        if(category) {
+            if(category.length === 24) {
+                query.categoria = category
+            }
+            else {
+                const foundCategory = await Categoria.findOne({ nome: {$regex: category, $options: 'i'}})
+                if(foundCategory) {
+                    query.categoria = foundCategory._id;
+                }
+                else {
+                    return res.json({
+                        total: 0,
+                        page: Number(page),
+                        pages: 0,
+                        produtos: []
+                    });
+                }
+            }
+        }
+
+        if(minPrice || maxPrice) {
+            query.preco = {};
+            if(minPrice) query.preco.$gte = Number(minPrice);
+            if(maxPrice) query.preco.$lte = Number(maxPrice);
+        }
+
+        if(inStock) {
+            query.estoque = inStock === 'true' ? { $gt: 0} : 0;
+        }
+ 
+        const { limit, skip } = req.pagination
+
+        const produtos = await Produto.find(query)
         .skip(skip)
-        .limit(limit)
-        .select("nome preco estoque isActive")
+        .limit(limit);
 
-        res.status(200).json({produtos: Produtos})
+        const total = await Produto.countDocuments(query);
+        
+        res.status(200).json({
+            total,
+            page: Number(page),
+            pages: Math.ceil(total / limit),
+            produtos
+        });
     }
     catch(err) {
-        res.status(500).json({message: "Erro ao Listar Produtos"});
+        res.status(500).json({message: "Erro ao Listar Produtos", error: err.message });
     }
 }
 
