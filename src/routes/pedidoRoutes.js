@@ -1,4 +1,5 @@
 import express from 'express';
+import { middlewareAuthentication } from "../middlewares/Authentication.middleware.js";
 import {
     criarPedido,
     listarPedidos,
@@ -21,25 +22,25 @@ import {
 const router = express.Router();
 
 
-router.post('/', criarPedido);
-router.get('/listar', listarPedidos);
-router.get('/listar/:id', listarPedido);
-router.put('/atualizar/:id', atualizarPedido);
-router.delete('/delete/:id', deletarPedido);
-router.get('/cliente/:clienteId', listarPedidosPorCliente)
+router.post('/', middlewareAuthentication, criarPedido);
+router.get('/listar', middlewareAuthentication, listarPedidos);
+router.get('/listar/:id', middlewareAuthentication, listarPedido);
+router.put('/atualizar/:id', middlewareAuthentication, atualizarPedido);
+router.delete('/delete/:id', middlewareAuthentication, deletarPedido);
+router.get('/cliente/:clienteId', middlewareAuthentication, listarPedidosPorCliente)
 
 // Rotas para gerenciamento de status
-router.patch('/:id/status', atualizarStatus);
-router.patch('/:id/confirmar', confirmarPedido);
-router.patch('/:id/cancelar', cancelarPedido);
-router.patch('/:id/preparar', prepararPedido);
-router.patch('/:id/finalizar-preparo', finalizarPreparo);
-router.patch('/:id/entregar', entregarPedido);
+router.patch('/:id/status', middlewareAuthentication, atualizarStatus);
+router.patch('/:id/confirmar', middlewareAuthentication, confirmarPedido);
+router.patch('/:id/cancelar', middlewareAuthentication, cancelarPedido);
+router.patch('/:id/preparar', middlewareAuthentication, prepararPedido);
+router.patch('/:id/finalizar-preparo', middlewareAuthentication, finalizarPreparo);
+router.patch('/:id/entregar', middlewareAuthentication, entregarPedido);
 
 // outras rotas
-router.get('/:id/total', calcularTotal);
-router.get('/relatorio/vendas', relatorioVendas);
-router.post('/:id/pagamento', processarPagamento);
-router.post('/:id/entrega', iniciarEntrega);
+router.get('/:id/total', middlewareAuthentication, calcularTotal);
+router.get('/relatorio/vendas', middlewareAuthentication, relatorioVendas);
+router.post('/:id/pagamento', middlewareAuthentication, processarPagamento);
+router.post('/:id/entrega', middlewareAuthentication, iniciarEntrega);
 
 export default router;

@@ -156,7 +156,6 @@ export const atualizarPedido = async (req, res) => {
         const { id } = req.params;
         const dadosAtualizacao = req.body;
 
-        // Como não temos método atualizarPedido no service, vamos fazer diretamente
         const pedidoAtualizado = await Pedido.findByIdAndUpdate(
             id, 
             dadosAtualizacao, 
