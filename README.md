@@ -19,11 +19,11 @@ Este é um projeto de E-commerce desenvolvido com uma stack moderna e escalável
 ✅ Validações automáticas para dados de entrada  
 ✅ Middleware de validação para todas as rotas  
 ✅ Schemas de validação para usuários, produtos e categorias  
-✅ Sistema de upload de imagens para produtos (com suporte a múltiplas imagens e Cloudinary)
-✅ Sistema de busca, filtro e paginação para produtos
-✅ Sistema de Avaliações
-✅ Sistema de Carrinho de Compras (com cálculo automático de totais e validação de estoque)
-✅ Sistema de Pedidos
+✅ Sistema de upload de imagens para produtos (com suporte a múltiplas imagens e Cloudinary)  
+✅ Sistema de busca, filtro e paginação para produtos  
+✅ Sistema de Avaliações  
+✅ Sistema de Carrinho de Compras (com cálculo automático de totais e validação de estoque)  
+✅ Sistema de Pedidos  
 ---
 
 ## 🚀 Tecnologias Utilizadas
